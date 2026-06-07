@@ -1,65 +1,68 @@
 # Hydra
 <div align="center">
-  <img src="https://github.com/MrDiamond64/Hydra/blob/main/img/main.png?raw=true" alt="A screenshot showing the Hydra Players UI"/>
+  <img src="https://github.com/MrDiamond64/Hydra/blob/main/img/main.png?raw=true" alt="Hydra 玩家界面截图"/>
 </div>
 
-Hydra is a [BepInEx](https://github.com/BepInEx/BepInEx) Among Us mod built with the intention of enhancing the Among Us playing experience. Hydra adds quality of life features, fun trolling features, and an anticheat to detect players hacking in your lobbies.
+Hydra 是一款基于 [BepInEx](https://github.com/BepInEx/BepInEx) 的 Among Us 模组，旨在提升 Among Us 的游戏体验。Hydra 提供了便捷功能、趣味恶搞功能，以及用于检测房间内作弊玩家的反作弊系统。
 
-We have a Discord server, feel free to join and talk, ask for help, or offer suggestions: https://discord.gg/N7azGPHm5F
+我们有一个 Discord 服务器，欢迎加入交流、寻求帮助或提出建议：https://discord.gg/N7azGPHm5F
 
-# Features
+# 功能特性
 > [!NOTE]
-> This repo is a heavily stripped-down version with features I deem too powerful removed to prevent abuse, such as [being able to ban players from lobbies without being host](https://streamable.com/wtb7jl)
+> 本仓库是经过大幅精简的版本，移除了我认为过于强大、可能被滥用的功能，例如[无需房主身份即可从房间封禁玩家](https://streamable.com/wtb7jl)
 >
-> Being able to ban players from lobbies without being host is a great way to deal with annoying players who call meetings as soon as the game starts, or ban hackers from lobbies I am inside without having to reach a unanimous votekick, however this opens the door for abuse where someone could ban all the imposters from the lobby to insta-win or banning players who suspect you being an imposter.
+> 无需房主即可封禁玩家是处理那些游戏一开始就乱开会的烦人玩家的好办法，也可以在我所在的房间封禁外挂。但这也会带来滥用的风险——比如有人可以封禁所有内鬼来瞬间获胜，或者封禁怀疑你是内鬼的玩家。
 
-- In-game notifications
-- Show chat messages by ghosts (Useful for moderation to determine if players are acting fair)
-- Always visible chat button
-- Be able to flip the Skeld map as host
-- Always impostor as host
-- Player color randomizer
-- Teleporter
-- Sabotage and close doors as crewmate
-- Device and version spoofer
-- See other player's roles
-- [Become immortal](https://streamable.com/k1b0m0)
-- [Configurable anticheat to detect common hacks and exploits](https://github.com/MrDiamond64/Hydra?tab=readme-ov-file#hydra-anticheat)
-- And more!
+- 游戏内通知系统
+- 显示幽灵的聊天消息（方便管理员判断玩家是否公平游戏）
+- 聊天按钮始终可见
+- 作为房主可使用翻转版 Skeld 地图
+- 房主强制内鬼身份
+- 玩家颜色随机化
+- 传送功能
+- 船员身份也可破坏和关门
+- 设备和版本伪装
+- 查看其他玩家的角色
+- [不死之身](https://streamable.com/k1b0m0)
+- [可配置的反作弊系统，检测常见外挂和漏洞](https://github.com/MrDiamond64/Hydra?tab=readme-ov-file#hydra-anticheat)
+- 还有更多！
 
-# Hydra Anticheat
-Hydra Anticheat is quite possibly the heart of this mod. It is able to detect when players attempt to cheat, such as if they enter vents without the proper roles, or try to teleport around the map. Upon detecting a cheater, Hydra is able to automatically ban the player from the lobby. You do not have to be the host of the lobby to be able to use Hydra Anticheat, you can do so without being host which will just send you a notification and not ban the player. Hydra Anticheat is meant to extend the vanilla Among Us anticheat by adding checks for cheats it does currently not detect, though it can be used in custom Among Us servers with a less strict anticheat as long as it follows a baseline.
+# Hydra 反作弊
+Hydra 反作弊可以说是本模组的核心。它能够检测玩家何时试图作弊，例如没有相应角色却钻入管道，或试图在地图上瞬移。检测到作弊者后，Hydra 可以自动将其从房间封禁。你不需要是房主也能使用 Hydra 反作弊——非房主模式下只会向你发送通知而不会封禁玩家。Hydra 反作弊旨在扩展原版 Among Us 反作弊，增加其目前未检测到的作弊检查，不过它也可以用在反作弊较宽松的自定义服务器上，只要遵循基本的底线。
 
-Hydra Anticheat comes with a basic baseline: the backend server must be able to prevent player impersonation. If cheaters are able to send RPCs on the behalf of other players, then Hydra Anticheat will not be able to accurately determine who is cheating or not and flag the wrong players. The vanilla Among Us servers already come with impersonation checks, so this should not be much of a concern in those servers.
+Hydra 反作弊有一个基本前提：后端服务器必须能够防止玩家身份伪造。如果作弊者能够以其他玩家的名义发送 RPC，那么 Hydra 反作弊将无法准确判断谁是真正的作弊者，可能会错误标记无辜玩家。原版 Among Us 服务器已经具备身份伪造检测，所以在这类服务器上通常不用担心此问题。
 
-# Installation and Usage
+# 安装与使用
 > [!WARNING]
-> Before using Hydra, please make sure to understand and fully consent to the warnings provided in the [Disclaimer](https://github.com/MrDiamond64/Hydra?tab=readme-ov-file#disclaimer) section.
+> 在使用 Hydra 之前，请务必充分理解并同意[免责声明](#免责声明)部分中的警告。
 
-## Installing BepInEx
-[BepInEx](https://github.com/bepinex/bepinex) is a modding framework that allows mods to be created for Unity games. Among Us uses Unity as their game engine, so Hydra uses the BepInEx modding framework in order to modify the game. Before you get to downloading Hydra, you first need to install BepInEx. There are many variants of BepInEx, we will need the il2cpp version specifically as Among Us is uses the il2cpp compiler for cross-platform compatability. You can download BepInEx from the [Releases](https://github.com/MrDiamond64/Hydra/releases) tab, or you can alternatively get BepInEx binaries from [the BepInEx site](https://builds.bepinex.dev/projects/bepinex_be) if you would like. You may notice that BepInEx Il2Cpp has two architectures: x86 and x64, this is important as Among Us can be x86 or x64 depending on where you downloaded it from. The architecture of BepInEx must match the architecture of your Among Us installation. As a general rule of thumb, Microsoft Store and Epic Games provide x64 builds of Among Us, and Steam and Itch.io provide x86 builds of the game. If you are still unsure, you can open Task Manager by pressing `ctrl` + `shift` + `esc` on your keyboard, finding Among Us in the running processes list, and see if it says "Among Us.exe (32-bit)", if it does not then your build of Among Us us x64.
+## 安装 BepInEx
+[BepInEx](https://github.com/bepinex/bepinex) 是一个允许为 Unity 游戏创建模组的模组框架。Among Us 使用 Unity 作为游戏引擎，因此 Hydra 使用 BepInEx 框架来修改游戏。在下载 Hydra 之前，你需要先安装 BepInEx。BepInEx 有多种变体，我们需要的是 il2cpp 版本，因为 Among Us 使用 il2cpp 编译器来实现跨平台兼容。你可以从 [Releases](https://github.com/MrDiamond64/Hydra/releases) 页面下载 BepInEx，也可以从 [BepInEx 官网](https://builds.bepinex.dev/projects/bepinex_be) 获取 BepInEx 二进制文件。请注意 BepInEx Il2Cpp 有两种架构：x86 和 x64，这点很重要，因为 Among Us 可能是 x86 或 x64 取决于你的下载来源。BepInEx 的架构必须与你的 Among Us 安装版本匹配。一般来说，Microsoft Store 和 Epic Games 提供的是 x64 版本，Steam 和 Itch.io 提供的是 x86 版本。如果还不确定，可以按 `ctrl` + `shift` + `esc` 打开任务管理器，在运行进程列表中找到 Among Us，看是否显示"Among Us.exe (32位)"，如果没有则说明你的 Among Us 是 x64 版本。
 
-Once you have downloaded the proper BepInEx for your Among Us build, you want to open your Among Us installation directory (where `Among Us.exe` and `GameAssembly.dll` are located), and extract the contents of BepInEx into the Among Us directory. Alongside the `Among Us.exe` file, you should see new files and folders such as `winhttp.dll`, `BepInEx`, and `dotnet`. If you do not see those files then your archival program may have extracted them into its own seperate folder than the current directory, if that is the case then open the newly created folder, and drag and drop all the contents into the same directory that `Among Us.exe` is located at. Assuming everything was done correctly, BepInEx should be installed and you are ready to download Hydra.
+下载了适合你 Among Us 版本的 BepInEx 后，打开 Among Us 的安装目录（即 `Among Us.exe` 和 `GameAssembly.dll` 所在的位置），将 BepInEx 的内容解压到该目录中。在 `Among Us.exe` 旁边应该会出现新的文件和文件夹，如 `winhttp.dll`、`BepInEx` 和 `dotnet`。如果没有看到这些文件，可能是你的解压程序把它们解压到了单独的子文件夹中——打开那个新文件夹，把所有内容拖放到 `Among Us.exe` 所在的目录即可。如果一切正确，BepInEx 就安装好了，可以开始下载 Hydra。
 
-## Installing Hydra
-To download Hydra, you simply need to go to the [Releases](https://github.com/MrDiamond64/Hydra/releases) tab, download the `HydraMenu.dll` file, and copy and paste the `HydraMenu.dll` file into the `./BepInEx/plugins/` directory. After you have done that, you can open Among Us. Opening Among Us for the first time after installing BepInEx will be different than normal, it may take much longer to start and you will see a terminal window. This is completely normal, the start delay is part of the BepInEx preflight process. Any subsequent launches of Among Us will not have this delay. After waiting a bit, Among Us should open and a mod icon should show up at the top right of your screen, at this point Hydra is ready and you can now get straight into having fun with Hydra!
+## 安装 Hydra
+下载 Hydra 非常简单：前往 [Releases](https://github.com/MrDiamond64/Hydra/releases) 页面，下载 `HydraMenu.dll` 文件，然后将其复制到 `./BepInEx/plugins/` 目录中。完成后就可以启动 Among Us 了。首次安装 BepInEx 后启动 Among Us 会与平常不同——启动可能需要更长时间，并且会看到一个终端窗口。这完全正常，启动延迟是 BepInEx 预检流程的一部分。之后再启动 Among Us 就不会有这个延迟了。稍等片刻后，Among Us 应该会打开，屏幕右上角会出现一个模组图标，此时 Hydra 已经准备就绪，可以开始享受了！
 
-## Using Hydra
-You can access the Hydra UI by pressing `Insert` on your keyboard. Depending on your keyboard, you may have to toggle Num Lock or press the function key alongside the Insert key to get the menu to show up. After pressing Insert, you should see the Hydra UI. The Hydra UI has multiple parts: the sections pane, and the features panes. The sections pane will have a list of tabs such as `Self`, `Host`, and `Anticheat`. Pressing any of these tabs will show the features for this section in the Features Pane. The Features Pane will have sliders, buttons, and checkboxes which can be used to configure Hydra.
+## 使用 Hydra
+按键盘上的 `Insert` 键即可打开 Hydra 界面。根据你的键盘类型，可能需要开启 Num Lock 或同时按功能键才能弹出菜单。按下 Insert 后，你应该能看到 Hydra 界面。Hydra 界面由多个部分组成：左侧的导航标签栏和右侧的功能面板。导航栏包含 `欢迎`、`自身`、`主机`、`反作弊` 等标签页。点击任意标签页，功能面板中就会显示该部分的对应功能。功能面板中有滑块、按钮和复选框，可以用来配置 Hydra。
 
-# TODO
-- [ ] Improve anticheat with more checks (such as sabotaging as crewmate)
-- [x] Add scrollbars to UI sections
-- [x] Show player role and colors in Players UI section
-- [ ] Explore the modded vanilla protocol which seems to have a much more lenient anticheat
-- [ ] Saveable configs
+# 待办事项
+- [ ] 增加更多反作弊检查（如船员破坏检测）
+- [x] UI 区域添加滚动条
+- [x] 玩家界面显示角色和颜色
+- [ ] 探索似乎反作弊更宽松的 Modded 原版协议
+- [ ] 可保存的配置文件
 
-# Disclaimer
+# 免责声明
 > [!CAUTION]
-> **Hydra should NEVER, under any circumstances, be used to impair the experiences of other players. If you use some of the trolling features, please make sure you are doing so in a private lobby with consenting players. You are free to join public lobbies with Hydra enabled as long as you use it with the intention of improving your Among Us game. With great power comes great responsibility!**
+> **Hydra 在任何情况下都不应用于破坏其他玩家的游戏体验。如果你使用某些恶搞功能，请确保你在私人大厅中，并且其他玩家知情同意。你可以带着 Hydra 进入公共房间，但前提是你使用它是为了改善你的 Among Us 游戏体验。能力越大，责任越大！**
 
-Something I recognize with utility mods like Hydra is that it opens the door for malicious users to cause destruction in lobbies. I have tried to limit the potential of abuse by removing powerful and abuse-prone features from the public version and adding safeguards to limit abuse. Even with these protections, there is always a chance for abuse and malicious activities. All I can do is to ask you, the person using Hydra, to please do not use Hydra for malicious purposes and follow the [Innersloth Code of Conduct](https://www.innersloth.com/code-of-conduct/) and rules set by the lobby you are playing on. Only use it to detect cheaters in public lobbies, or in use where everyone else consents to the usage of the Hydra's more advanced features.
+我认识到像 Hydra 这样的工具模组可能会被恶意用户用来破坏房间。我已经尝试通过从公开版本中移除功能强大且容易被滥用的功能、添加防护措施来限制滥用的可能性。即使有这些保护措施，滥用和恶意行为仍然可能发生。我只能请求你——使用 Hydra 的人——请不要将 Hydra 用于恶意目的，遵守 [Innersloth 行为准则](https://www.innersloth.com/code-of-conduct/) 以及你所在房间的规则。仅在公共房间用于检测作弊者，或在其他玩家同意的情况下使用 Hydra 的高级功能。
 
-If you fail to follow my suggestion, then do not expect to receive any kind of support or liability by me. Your account may also be placed in a sanction by Innersloth and you will lose your Among Us account, along with any data associated with it, such as your friends list, unlocked cosmetics, purchases, beans and coins, etc.
+如果你不遵守我的建议，请不要期望从我这里获得任何形式的支持或责任承担。你的账号可能会被 Innersloth 处罚，你将失去你的 Among Us 账号及其关联的所有数据，包括好友列表、已解锁的装扮、购买记录、豆豆和金币等。
 
-This mod is not affiliated with Among Us or Innersloth LLC, and the content contained therein is not endorsed or otherwise sponsored by Innersloth LLC. Portions of the materials contained herein are property of Innersloth LLC. © Innersloth LLC.
+本模组与 Among Us 或 Innersloth LLC 无关，其中包含的内容未经 Innersloth LLC 认可或赞助。本文所含部分材料为 Innersloth LLC 的财产。© Innersloth LLC。
+
+---
+汉化者：HayashiUme
