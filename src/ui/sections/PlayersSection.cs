@@ -212,6 +212,7 @@ namespace HydraMenu.ui.sections
 				MeetingHud.Instance.RpcClose();
 			}
 			GUILayout.EndHorizontal();
+			if(GUILayout.Button("随机变形"))
 			{
 				PlayerControl randomPl = Utilities.GetRandomPlayer(false, false, false, false);
 				Utilities.ShapeshiftPlayer(target, randomPl);
@@ -417,5 +418,6 @@ namespace HydraMenu.ui.sections
 
 			PlayerControl.LocalPlayer.CmdReportDeadBody(target.Data);
 		}
+
 	}
 }

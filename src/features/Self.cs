@@ -12,7 +12,7 @@ namespace HydraMenu.features
 		public static bool AlwaysShowTaskAnimations { get; set; } = true;
 
 		[HarmonyPatch(typeof(PlayerBanData), nameof(PlayerBanData.IsBanned), MethodType.Getter)]
-		
+
 		public static class BypassIntentionalDisconnectionBlocks
 		{
 			public static bool Enabled { get; set; } = true;
