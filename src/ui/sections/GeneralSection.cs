@@ -1,21 +1,21 @@
-﻿using HydraMenu.features;
+using HydraMenu.features;
 using UnityEngine;
 
 namespace HydraMenu.ui.sections
 {
 	internal class GeneralSection : ISection
 	{
-		public GeneralSection() : base("General") { }
+		public GeneralSection() : base("欢迎") { }
 
 		public override void Render() {
-			GUILayout.Label("Welcome to Hydra! Hydra is a utility, moderation, and a trolling menu made to enhance the Among Us playing experience. We offer quality of life features, features to goof off with a closed group of friends and have a laugh, and features to help defend your lobbies from malicious players. Much of the feature-set included falls in the trolling group, as I personally made this to use in private lobbies with my friends. I hope you (and the people you play with) too are able to have fun using Hydra to play, or to protect yourself from hackers.\n\nSince some of Hydra's features can be used for cheating, I must make this explicity clear: Hydra should not be used to impair other player's experiences. Some people may have gotten off from a long day of work or school and just want to play a chill game of Among Us. By using Hydra to destroy lobbies, you are ruining people's day and robbing them out of enjoyment. If that does not convince you enough, then you should be aware that abusing mods for malicious purposes may result in a sanction being placed on your account.");
+			GUILayout.Label("欢迎使用 Hydra！Hydra 是一个集实用工具、管理功能和恶搞功能于一体的菜单，\n旨在提升 Among Us 的游戏体验。我们提供便捷功能、朋友间整活娱乐功能，\n以及保护你的房间免受恶意玩家侵扰的功能。\n\n由于 Hydra 的部分功能可能被用于作弊，我必须明确声明：\nHydra 不应用于破坏其他玩家的游戏体验。\n滥用本模组进行恶意行为可能导致你的账号被封禁。\n\n汉化者：HayashiUme");
 
-			Chat.OnChat.LogChatMessages = GUILayout.Toggle(Chat.OnChat.LogChatMessages, "Log chat messages to console");
+			Chat.OnChat.LogChatMessages = GUILayout.Toggle(Chat.OnChat.LogChatMessages, "记录聊天消息到控制台");
 
-			if(GUILayout.Button("Clear Notifications"))
+			if(GUILayout.Button("清除通知"))
 			{
 				Hydra.notifications.ClearNotifications();
-				Hydra.notifications.Send("Notifications", "All notifications have been cleared.", 5);
+				Hydra.notifications.Send("通知", "所有通知已清除。", 5);
 			}
 		}
 	}

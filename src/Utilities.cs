@@ -94,13 +94,13 @@ namespace HydraMenu
 
 			if(hasAnticheat && !AmongUsClient.Instance.AmHost)
 			{
-				Hydra.notifications.Send("Shapeshift Player", "You must be the host of the lobby in order to use this feature.");
+				Hydra.notifications.Send("Shapeshift Player", "必须你是房主才能使用此功能。");
 				return;
 			}
 
 			if(hasAnticheat && ShipStatus.Instance == null)
 			{
-				Hydra.notifications.Send("Shapeshift Player", "The game must have started for this option to work.");
+				Hydra.notifications.Send("Shapeshift Player", "此选项需要游戏已开始。");
 				return;
 			}
 

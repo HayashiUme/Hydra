@@ -9,7 +9,7 @@ namespace HydraMenu.ui.sections
 {
 	internal class PlayersSection : ISection
 	{
-		public PlayersSection() : base("Players") { }
+		public PlayersSection() : base("玩家") { }
 
 		public static Vector2 PlayerPaneSize
 		{
@@ -50,7 +50,7 @@ namespace HydraMenu.ui.sections
 		{
 			if(PlayerControl.AllPlayerControls.Count == 0)
 			{
-				GUILayout.Label("There are currently no online players.");
+				GUILayout.Label("当前没有在线玩家。");
 				return;
 			}
 
@@ -109,7 +109,7 @@ namespace HydraMenu.ui.sections
 		{
 			if(target == null || target.Data == null)
 			{
-				GUILayout.Label("Specified target is not valid.");
+				GUILayout.Label("指定的目标无效。");
 				return;
 			}
 
@@ -123,65 +123,65 @@ namespace HydraMenu.ui.sections
 				GUILayout.Label(
 					// If we want to get a player's name, we have to use NetworkedPlayerInfo::PlayerName instead of PlayerControl::name to avoid
 					// getting the incorrect name if the player is shapeshifted to another player
-					$"Name: {target.Data.PlayerName} ({Utilities.GetPlayerColor(target.Data)})" +
-					$"\nRole: {target.Data.RoleType}" +
-					$"\nState: " + (target.Data.IsDead ? "Dead" : "Alive") +
-					$"\nFriendcode: " + (streamerMode ? "REDACTED" : target.Data.FriendCode) +
-					$"\nPUID: " + (streamerMode ? "REDACTED" : target.Data.Puid) +
-					$"\nLevel: {target.Data.PlayerLevel + 1}" +
-					$"\nDevice: {platform.Platform}" +
-					(target.OwnerId == AmongUsClient.Instance.HostId ? "\nHost: true" : "")
+					$"名字: {target.Data.PlayerName} ({Utilities.GetPlayerColor(target.Data)})" +
+					$"\n角色: {target.Data.RoleType}" +
+					$"\n状态: " + (target.Data.IsDead ? "死亡" : "存活") +
+					$"\n好友码: " + (streamerMode ? "已隐藏" : target.Data.FriendCode) +
+					$"\nPUID: " + (streamerMode ? "已隐藏" : target.Data.Puid) +
+					$"\n等级: {target.Data.PlayerLevel + 1}" +
+					$"\n设备: {platform.Platform}" +
+					(target.OwnerId == AmongUsClient.Instance.HostId ? "\n主机: 是" : "")
 				);
 			}
 			else
 			{
 				GUILayout.Label(
-					$"Name: {target.Data.PlayerName} ({Utilities.GetPlayerColor(target.Data)})" +
-					$"\nRole: {target.Data.RoleType}" +
-					$"\nState: " + (target.Data.IsDead ? "Dead" : "Alive") +
-					$"\nIs Dummy: true"
+					$"名字: {target.Data.PlayerName} ({Utilities.GetPlayerColor(target.Data)})" +
+					$"\n角色: {target.Data.RoleType}" +
+					$"\n状态: " + (target.Data.IsDead ? "死亡" : "存活") +
+					$"\n虚拟玩家: 是"
 				);
 			}
 
-			Hydra.routines.playerFollower.following = Controls.PlayerSpecificToggle("Follow", target, Hydra.routines.playerFollower.following);
+			Hydra.routines.playerFollower.following = Controls.PlayerSpecificToggle("跟随", target, Hydra.routines.playerFollower.following);
 
-			if(GUILayout.Button("Teleport"))
+			if(GUILayout.Button("传送"))
 			{
 				// We do not want to use PlayerControl::GetTruePosition() here as it would teleport us to the player's feet
 				Teleporter.TeleportTo(target.transform.position);
 			}
 
-			if(GUILayout.Button("Murder"))
+			if(GUILayout.Button("杀死"))
 			{
 				AttemptMurder(target);
 			}
 
-			if(GUILayout.Button("Copy Avatar"))
+			if(GUILayout.Button("复制外观"))
 			{
 				Utilities.CopyPlayer(target);
 			}
 
-			if(GUILayout.Button("Report Body"))
+			if(GUILayout.Button("报告尸体"))
 			{
 				AttemptReportBody(target);
 			}
 
 			GUILayout.Space(5);
-			GUILayout.Label("Host Only Features:" + (AmongUsClient.Instance.AmHost ? "" : "\n(Using these will get you kicked!)"));
+			GUILayout.Label("仅主机可用:" + (AmongUsClient.Instance.AmHost ? "" : "\n(使用这些会害你被踢!)"));
 
-			Troll.AutoReportBodies.source = Controls.PlayerSpecificToggle("Auto Report Bodies As", target, Troll.AutoReportBodies.source);
+			Troll.AutoReportBodies.source = Controls.PlayerSpecificToggle("自动报告尸体 身份", target, Troll.AutoReportBodies.source);
 
-			if(GUILayout.Button("Force Meeting As"))
+			if(GUILayout.Button("强制开会 身份"))
 			{
 				Utilities.OpenMeeting(target, null);
 			}
 
 			GUILayout.BeginHorizontal();
-			if(GUILayout.Button("Force All Votes To"))
+			if(GUILayout.Button("强制所有人投给"))
 			{
 				if(MeetingHud.Instance == null)
 				{
-					Hydra.notifications.Send("Vote Forcer", "This option can only be used when there is an active meeting.");
+					Hydra.notifications.Send("强制投票", "此功能仅在有活跃会议时可用。");
 				}
 				else
 				{
@@ -197,7 +197,7 @@ namespace HydraMenu.ui.sections
 				}
 			}
 
-			if(GUILayout.Button("Eject"))
+			if(GUILayout.Button("放逐"))
 			{
 				if(MeetingHud.Instance == null)
 				{
@@ -212,15 +212,13 @@ namespace HydraMenu.ui.sections
 				MeetingHud.Instance.RpcClose();
 			}
 			GUILayout.EndHorizontal();
-
-			if(GUILayout.Button("Frame Shapeshift"))
 			{
 				PlayerControl randomPl = Utilities.GetRandomPlayer(false, false, false, false);
 				Utilities.ShapeshiftPlayer(target, randomPl);
 			}
 
 			GUILayout.BeginHorizontal();
-			if(GUILayout.Button("Flood Player with Tasks"))
+			if(GUILayout.Button("刷屏任务"))
 			{
 				byte[] taskIds = new byte[255];
 
@@ -232,17 +230,17 @@ namespace HydraMenu.ui.sections
 				target.Data.RpcSetTasks(taskIds);
 			}
 
-			if(GUILayout.Button("Clear Tasks"))
+			if(GUILayout.Button("清空任务"))
 			{
 				target.Data.RpcSetTasks(Array.Empty<byte>());
 			}
 			GUILayout.EndHorizontal();
 
 			GUILayout.Space(5);
-			GUILayout.Label("Game Options Modifier:");
+			GUILayout.Label("游戏选项修改:");
 
 			GUILayout.BeginHorizontal();
-			if(GUILayout.Button("Blind"))
+			if(GUILayout.Button("致盲"))
 			{
 				IGameOptions gameOptions = GameOptions.CreateCloneOptions(GameManager.Instance.LogicOptions.currentGameOptions);
 				gameOptions.SetFloat(FloatOptionNames.CrewLightMod, -1.0f);
@@ -251,7 +249,7 @@ namespace HydraMenu.ui.sections
 				GameOptions.SendGameOptionsToClient(gameOptions, target.OwnerId);
 			}
 
-			if(GUILayout.Button("Fullbright"))
+			if(GUILayout.Button("全亮"))
 			{
 				IGameOptions gameOptions = GameOptions.CreateCloneOptions(GameManager.Instance.LogicOptions.currentGameOptions);
 				gameOptions.SetFloat(FloatOptionNames.CrewLightMod, 1000f);
@@ -262,7 +260,7 @@ namespace HydraMenu.ui.sections
 			GUILayout.EndHorizontal();
 
 			GUILayout.BeginHorizontal();
-			if(GUILayout.Button("Slow Speed"))
+			if(GUILayout.Button("减速"))
 			{
 				IGameOptions gameOptions = GameOptions.CreateCloneOptions(GameManager.Instance.LogicOptions.currentGameOptions);
 				gameOptions.SetFloat(FloatOptionNames.PlayerSpeedMod, 0.1f);
@@ -270,7 +268,7 @@ namespace HydraMenu.ui.sections
 				GameOptions.SendGameOptionsToClient(gameOptions, target.OwnerId);
 			}
 
-			if(GUILayout.Button("Super Speed"))
+			if(GUILayout.Button("超速"))
 			{
 				// The vanilla anticheat prevents us from being able to exceed speeds greater than 3.0f
 				float maxSpeed = Utilities.IsAnticheatPresent() ? 3.0f : 5.0f;
@@ -303,20 +301,21 @@ namespace HydraMenu.ui.sections
 			GUILayout.EndHorizontal();
 			*/
 
-			if(GUILayout.Button("Reset to Defaults"))
+			if(GUILayout.Button("恢复默认"))
 			{
 				IGameOptions gameOptions = GameOptions.CreateCloneOptions(GameManager.Instance.LogicOptions.currentGameOptions);
 				GameOptions.SendGameOptionsToClient(gameOptions, target.OwnerId);
 			}
 
 			GUILayout.Space(5);
-			GUILayout.Label($"Change color to: {selectedColor}");
+			GUILayout.Label($"更改颜色为: {selectedColor}");
 			selectedColor = Controls.HorizontalColorSlider(selectedColor);
 
-			if(GUILayout.Button("Set Color"))
+			if(GUILayout.Button("设置颜色"))
 			{
 				target.RpcSetColor((byte)selectedColor);
 			}
+
 		}
 
 		private static void AttemptMurder(PlayerControl target)
@@ -325,7 +324,7 @@ namespace HydraMenu.ui.sections
 
 			if(hasAnticheat && ShipStatus.Instance == null)
 			{
-				Hydra.notifications.Send("Murder Player", $"You can only kill players once the game has started.");
+				Hydra.notifications.Send("Murder Player", $"游戏开始后才能杀人。");
 				return;
 			}
 
@@ -333,7 +332,7 @@ namespace HydraMenu.ui.sections
 			{
 				Hydra.Log.LogInfo($"Attempting to murder {target.Data.PlayerName}, we are the host so we can use the MurderPlayer RPC");
 				PlayerControl.LocalPlayer.RpcMurderPlayer(target, true);
-				Hydra.notifications.Send("Murder Player", $"Killed {target.Data.PlayerName}.", 5);
+				Hydra.notifications.Send("Murder Player", $"已杀死 {target.Data.PlayerName}.", 5);
 				return;
 			}
 
@@ -341,7 +340,7 @@ namespace HydraMenu.ui.sections
 			{
 				Hydra.Log.LogInfo($"Attempting to murder {target.Data.PlayerName}, we are are in a host-authoritative lobby so we can use the MurderPlayer RPC");
 				PlayerControl.LocalPlayer.RpcMurderPlayer(target, true);
-				Hydra.notifications.Send("Murder Player", $"Killed {target.Data.PlayerName}.", 5);
+				Hydra.notifications.Send("Murder Player", $"已杀死 {target.Data.PlayerName}.", 5);
 				return;
 			}
 
@@ -351,17 +350,17 @@ namespace HydraMenu.ui.sections
 			// There are more checks, but I do not think it is worth adding them all here
 			if(!RoleManager.IsImpostorRole(PlayerControl.LocalPlayer.Data.RoleType))
 			{
-				Hydra.notifications.Send("Murder Player", "You can only murder players when you are an Impostor, unless you are the host of the lobby.");
+				Hydra.notifications.Send("Murder Player", "只有内鬼才能杀人，或者你是房主。");
 				return;
 			}
 
 			if(MeetingHud.Instance != null)
 			{
-				Hydra.notifications.Send("Murder Player", "You can only murder players outside of meetings, unless you are the host of the lobby.");
+				Hydra.notifications.Send("Murder Player", "只能在会议之外杀人，或者你是房主。");
 				return;
 			}
 
-			Hydra.notifications.Send("Murder Player", $"Attempted to kill {target.Data.PlayerName}.", 5);
+			Hydra.notifications.Send("Murder Player", $"尝试杀死 {target.Data.PlayerName}.", 5);
 			PlayerControl.LocalPlayer.CmdCheckMurder(target);
 		}
 
@@ -382,13 +381,13 @@ namespace HydraMenu.ui.sections
 				// however there are ways that players can use to mark themselves as dead in the lobby
 				if(LobbyBehaviour.Instance != null)
 				{
-					Hydra.notifications.Send("Report Body", "The game must have started for this option to work.");
+					Hydra.notifications.Send("报告尸体", "此选项需要游戏已开始。");
 					return;
 				}
 
 				if(!target.Data.IsDead)
 				{
-					Hydra.notifications.Send("Report Body", "You can only report bodies of players who have died in this round.");
+					Hydra.notifications.Send("报告尸体", "只能报告本轮已死亡玩家的尸体。");
 					return;
 				}
 
@@ -409,7 +408,7 @@ namespace HydraMenu.ui.sections
 
 				if(!bodyExists)
 				{
-					Hydra.notifications.Send("Report Body", "Unable to find a dead body for this player, you can only report a player's body if they have died this round and their body has not dissolved.");
+					Hydra.notifications.Send("报告尸体", "找不到该玩家的尸体, you can only report a player's body if they have died this round and their body has not dissolved.");
 					return;
 				}
 			}

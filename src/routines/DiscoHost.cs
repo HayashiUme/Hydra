@@ -27,14 +27,14 @@ namespace HydraMenu.routines
 		{
 			if(PlayerControl.LocalPlayer == null)
 			{
-				Hydra.notifications.Send("Disco Party", "Disco Party can only be used inside of a game.", 10);
+				Hydra.notifications.Send("迪斯科派对", "迪斯科派对只能在游戏内使用。", 10);
 				Enabled = false;
 				return;
 			}
 
 			if(Utilities.IsAnticheatPresent() && !AmongUsClient.Instance.AmHost)
 			{
-				Hydra.notifications.Send("Disco Party", "Disco Party can only be used if you are the host of the lobby.", 10);
+				Hydra.notifications.Send("迪斯科派对", "迪斯科派对需要你是房主。", 10);
 				Enabled = false;
 				return;
 			}
@@ -42,7 +42,7 @@ namespace HydraMenu.routines
 
 		public override void OnDisconnect()
 		{
-			Hydra.notifications.Send("Disco Party", "Disco Party was disabled as you left the game.", 10);
+			Hydra.notifications.Send("迪斯科派对", "离开游戏，迪斯科派对已禁用。", 10);
 			Enabled = false;
 		}
 	}

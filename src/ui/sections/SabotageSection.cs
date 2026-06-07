@@ -1,59 +1,59 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace HydraMenu.ui.sections
 {
 	internal class SabotageSection : ISection
 	{
-		public SabotageSection() : base("Sabotage") { }
+		public SabotageSection() : base("破坏") { }
 
 		public override void Render()
 		{
 			if(ShipStatus.Instance == null)
 			{
-				GUILayout.Label("You are not currently in a game, or the game has not started yet. These options will not work.");
+				GUILayout.Label("你当前不在游戏中或游戏尚未开始，这些选项将无法使用。");
 			}
 
-			Sabotage.UpdateSystemsDirectly = GUILayout.Toggle(Sabotage.UpdateSystemsDirectly, "Update Sabotage Systems Directly");
+			Sabotage.UpdateSystemsDirectly = GUILayout.Toggle(Sabotage.UpdateSystemsDirectly, "直接更新破坏系统");
 
 			Dictionary<string, SystemTypes> sabotages = Sabotage.GetSabotages();
 			Dictionary<string, SystemTypes> doors = Sabotage.GetDoors();
 
 			GUILayout.BeginHorizontal();
-			if(GUILayout.Button("Sabotage All"))
+			if(GUILayout.Button("全部破坏"))
 			{
 				Sabotage.SabotageAll();
-				Hydra.notifications.Send("Sabotage", "All sabotages have been enabled.", 5);
+				Hydra.notifications.Send("破坏", "所有破坏已启用。", 5);
 			}
 
-			if(GUILayout.Button("Close All Doors"))
+			if(GUILayout.Button("关闭所有门"))
 			{
 				Sabotage.LockAll();
-				Hydra.notifications.Send("Sabotage", "All doors have been closed.", 5);
+				Hydra.notifications.Send("破坏", "所有门已关闭。", 5);
 			}
 			GUILayout.EndHorizontal();
 
 			GUILayout.BeginHorizontal();
-			if(GUILayout.Button("Fix All Sabotages"))
+			if(GUILayout.Button("修复所有破坏"))
 			{
 				Sabotage.FixAllSabotages();
-				Hydra.notifications.Send("Sabotage", "All sabotages have been repaired.", 5);
+				Hydra.notifications.Send("破坏", "所有破坏已修复。", 5);
 			}
 
-			if(GUILayout.Button("Unlock All Doors"))
+			if(GUILayout.Button("解锁所有门"))
 			{
 				if(Sabotage.CanUnlockDoors())
 				{
 					Sabotage.UnlockAll();
-					Hydra.notifications.Send("Sabotage", "All doors have been unlocked.", 5);
+					Hydra.notifications.Send("破坏", "所有门已解锁。", 5);
 				} else {
-					Hydra.notifications.Send("Sabotage", "The map you are currently on does not support unlocking doors.", 10);
+					Hydra.notifications.Send("破坏", "当前地图不支持解锁门。", 10);
 				}
 			}
 			GUILayout.EndHorizontal();
 
 			GUILayout.Space(5);
-			GUILayout.Label("Sabotages:");
+			GUILayout.Label("破坏项 (左键破坏/右键修复):");
 			foreach(var (key, value) in sabotages)
 			{
 				if(GUILayout.Button(key))
@@ -62,10 +62,10 @@ namespace HydraMenu.ui.sections
 				}
 			}
 
-			GUILayout.Label("Close Doors:");
+			GUILayout.Label("关门:");
 			if(doors.Count == 0)
 			{
-				GUILayout.Label("This map has no doors that can be closed.");
+				GUILayout.Label("当前地图没有可关闭的门。");
 				return;
 			}
 
@@ -90,7 +90,6 @@ namespace HydraMenu.ui.sections
 				i++;
 			}
 
-			// If the amount of door sabotages is an odd number then we won't be ending the horizontal layout, so we check if we need to end it here
 			if(i % 2 != 0)
 			{
 				GUILayout.EndHorizontal();
@@ -104,12 +103,12 @@ namespace HydraMenu.ui.sections
 			if(currentEvent.button == 0)
 			{
 				Sabotage.SabotageSystem(system);
-				Hydra.notifications.Send("Sabotage", $"{system} has been sabotaged.", 5);
+				Hydra.notifications.Send("破坏", $"{system} 已被破坏。", 5);
 			}
 			else if(currentEvent.button == 1)
 			{
 				Sabotage.FixSabotage(system);
-				Hydra.notifications.Send("Sabotage", $"{system} has been fixed,", 5);
+				Hydra.notifications.Send("破坏", $"{system} 已修复。", 5);
 			}
 		}
 	}

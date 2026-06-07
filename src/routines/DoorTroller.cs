@@ -34,21 +34,21 @@ namespace HydraMenu.routines
 		{
 			if(PlayerControl.LocalPlayer == null || ShipStatus.Instance == null)
 			{
-				Hydra.notifications.Send("Door Troller", "Door troller can only be used if the game has started.", 10);
+				Hydra.notifications.Send("门板恶搞", "门板恶搞需要游戏已开始。", 10);
 				Enabled = false;
 				return;
 			}
 
 			if(ShipStatus.Instance.AllDoors.Count == 0)
 			{
-				Hydra.notifications.Send("Door Troller", "Door troller can not be used as this map does not have any doors.", 10);
+				Hydra.notifications.Send("门板恶搞", "当前地图没有门，无法使用门板恶搞。", 10);
 				Enabled = false;
 				return;
 			}
 
 			if(!Sabotage.CanUnlockDoors())
 			{
-				Hydra.notifications.Send("Door Troller", "Door troller can only be used if you are the host, or if the current map supports unlocking doors.", 10);
+				Hydra.notifications.Send("门板恶搞", "门板恶搞需要你是房主，或者当前地图支持解锁门。", 10);
 				Enabled = false;
 				return;
 			}
@@ -56,7 +56,7 @@ namespace HydraMenu.routines
 
 		public override void OnDisconnect()
 		{
-			Hydra.notifications.Send("Door Troller", "Door Troller was disabled as you left the game.", 10);
+			Hydra.notifications.Send("门板恶搞", "离开游戏，门板恶搞已禁用。", 10);
 			Enabled = false;
 		}
 	}

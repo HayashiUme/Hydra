@@ -11,8 +11,8 @@ namespace HydraMenu.features
 		// meaning this will only show task animations on normal games and not hide and seek aswell
 		public static bool AlwaysShowTaskAnimations { get; set; } = true;
 
-		/*
-		[HarmonyPatch(typeof(DataManager), nameof(DataManager.Player.Ban.IsBanned), MethodType.Getter)]
+		[HarmonyPatch(typeof(PlayerBanData), nameof(PlayerBanData.IsBanned), MethodType.Getter)]
+		
 		public static class BypassIntentionalDisconnectionBlocks
 		{
 			public static bool Enabled { get; set; } = true;
@@ -22,7 +22,7 @@ namespace HydraMenu.features
 				if(Enabled) __result = false;
 			}
 		}
-		*/
+
 
 		[HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.RpcSetScanner))]
 		class AlwaysDoScanAnimation

@@ -1,4 +1,4 @@
-﻿using HydraMenu.features;
+using HydraMenu.features;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -7,13 +7,11 @@ namespace HydraMenu.ui.sections
 {
 	internal class SpooferSection : ISection
 	{
-		public SpooferSection() : base("Spoofer") { }
+		public SpooferSection() : base("伪装") { }
 
 		public readonly Dictionary<string, int> versions = new Dictionary<string, int>()
 		{
-			// Current version at runtime
-			// VersionShower::Start uses ReferenceDataManager.Refdata.userFacingVersion to get version strings such as "17.1" however that doesn't seem to before the game fully loads, so we have to use Constants::AddressablesVersion to get a less human-understandable version string
-			{ $"{Constants.AddressablesVersion} (Current)", Constants.GetBroadcastVersion() },
+			{ $"{Constants.AddressablesVersion} (当前)", Constants.GetBroadcastVersion() },
 			{ "16.1.0", 50632950 },
 			{ "17.1", 50643450 },
 			{ "17.1.2", 50647000 },
@@ -26,15 +24,15 @@ namespace HydraMenu.ui.sections
 
 		public override void Render()
 		{
-			Spoofer.shouldSpoofVersion = GUILayout.Toggle(Spoofer.shouldSpoofVersion, "Enable Version Spoofing");
+			Spoofer.shouldSpoofVersion = GUILayout.Toggle(Spoofer.shouldSpoofVersion, "启用版本伪装");
 
-			GUILayout.Label($"Spoofed Version: {versions.ElementAt(versionSelection).Key} ({Spoofer.spoofedVersion})");
+			GUILayout.Label($"伪装版本: {versions.ElementAt(versionSelection).Key} ({Spoofer.spoofedVersion})");
 			versionSelection = (int)GUILayout.HorizontalSlider(versionSelection, 0, versions.Count - 1);
 			Spoofer.spoofedVersion = versions.ElementAt(versionSelection).Value;
 
-			Spoofer.useModdedProtocol = GUILayout.Toggle(Spoofer.useModdedProtocol, "Use Modded Protocol");
+			Spoofer.useModdedProtocol = GUILayout.Toggle(Spoofer.useModdedProtocol, "使用 Modded 协议");
 
-			GUILayout.Label($"Spoofed Platform: {Spoofer.spoofedPlatform}");
+			GUILayout.Label($"伪装平台: {Spoofer.spoofedPlatform}");
 			Spoofer.spoofedPlatform = (Platforms)GUILayout.HorizontalSlider((float)Spoofer.spoofedPlatform, 0, 10);
 		}
 	}

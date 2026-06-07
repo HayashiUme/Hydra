@@ -12,7 +12,7 @@ namespace HydraMenu.anticheat.rpc
 			// however we are not able to determine who sent the CloseDoorsOfType RPC
 			if(GameManager.Instance.IsHideAndSeek())
 			{
-				Hydra.notifications.Send("Anticheat", "Someone attempted to close doors while in Hide and Seek.", Anticheat.NotificationDuration);
+				Hydra.notifications.Send("反作弊", "有人在躲猫猫模式中试图关门。", Anticheat.NotificationDuration);
 				blockRpc = true;
 			}
 		}

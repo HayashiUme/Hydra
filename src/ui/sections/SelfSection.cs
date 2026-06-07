@@ -1,4 +1,4 @@
-﻿using BepInEx.Unity.IL2CPP.Utils.Collections;
+using BepInEx.Unity.IL2CPP.Utils.Collections;
 using HydraMenu.features;
 using System.Collections;
 using UnityEngine;
@@ -7,7 +7,7 @@ namespace HydraMenu.ui.sections
 {
 	internal class SelfSection : ISection
 	{
-		public SelfSection() : base("Self") { }
+		public SelfSection() : base("自身") { }
 
 		private uint level = 199;
 
@@ -15,25 +15,25 @@ namespace HydraMenu.ui.sections
 		{
 			if(PlayerControl.LocalPlayer == null || PlayerControl.LocalPlayer.Data == null)
 			{
-				GUILayout.Label("You are not currently in a game, these options will not work.");
+				GUILayout.Label("你当前不在游戏中，这些选项将无法使用。");
 			}
 			else
 			{
-				GUILayout.Label($"Role: {PlayerControl.LocalPlayer.Data.RoleType}");
+				GUILayout.Label($"角色: {PlayerControl.LocalPlayer.Data.RoleType}");
 			}
 
-			// Self.BypassIntentionalDisconnectionBlocks.Enabled = GUILayout.Toggle(Self.BypassIntentionalDisconnectionBlocks.Enabled, "Bypass intentional disconnection temp bans");
-			Self.UpdateStatsFreeplay.Enabled = GUILayout.Toggle(Self.UpdateStatsFreeplay.Enabled, "Update Stats in Freeplay");
-			Immortality.Enabled = GUILayout.Toggle(Immortality.Enabled, "Become Immortal");
-			Self.AlwaysShowTaskAnimations = GUILayout.Toggle(Self.AlwaysShowTaskAnimations, "Always Show Task Animations");
-			Self.NoLadderCooldown.Enabled = GUILayout.Toggle(Self.NoLadderCooldown.Enabled, "No Ladder Cooldown");
-			Self.UnlimitedMeetings.enabled = GUILayout.Toggle(Self.UnlimitedMeetings.enabled, "Unlimited Meetings");
+			Self.UpdateStatsFreeplay.Enabled = GUILayout.Toggle(Self.UpdateStatsFreeplay.Enabled, "自由模式下更新统计数据");
+			Self.BypassIntentionalDisconnectionBlocks.Enabled = GUILayout.Toggle(Self.BypassIntentionalDisconnectionBlocks.Enabled, "取消故意断线等待惩罚");
+			Immortality.Enabled = GUILayout.Toggle(Immortality.Enabled, "不死之身");
+			Self.AlwaysShowTaskAnimations = GUILayout.Toggle(Self.AlwaysShowTaskAnimations, "始终显示任务动画");
+			Self.NoLadderCooldown.Enabled = GUILayout.Toggle(Self.NoLadderCooldown.Enabled, "无爬梯冷却");
+			Self.UnlimitedMeetings.enabled = GUILayout.Toggle(Self.UnlimitedMeetings.enabled, "无限紧急会议");
 
-			if(GUILayout.Button("Call Meeting"))
+			if(GUILayout.Button("召开紧急会议"))
 			{
 				if(AmongUsClient.Instance.AmHost)
 				{
-					Hydra.Log.LogInfo("We are the host, we can force a meeting");
+					Hydra.Log.LogInfo("我们是主机，可以强制开会");
 					Utilities.OpenMeeting(PlayerControl.LocalPlayer, null);
 				}
 				else
@@ -42,65 +42,63 @@ namespace HydraMenu.ui.sections
 				}
 			}
 
-			if(GUILayout.Button("Complete All Tasks"))
+			if(GUILayout.Button("完成所有任务"))
 			{
 				PlayerControl.LocalPlayer.StartCoroutine(CompleteAllTasks().WrapToIl2Cpp());
 			}
 
-			if(GUILayout.Button("Randomize Avatar"))
+			if(GUILayout.Button("随机化外观"))
 			{
 				if(AmongUsClient.Instance.AmConnected)
 				{
 					Utilities.RandomizePlayer(true);
-
-					Hydra.notifications.Send("Player Randomizer", "Your avatar has been randomized for this game.", 5);
+					Hydra.notifications.Send("外观随机化", "你本局的外观已随机化。", 5);
 				} else
 				{
 					AccountManager.Instance.RandomizeName();
 					Utilities.RandomizePlayer();
-
-					Hydra.notifications.Send("Player Randomizer", "Your name and avatar has been randomized.", 5);
+					Hydra.notifications.Send("外观随机化", "你的名字和外观已随机化。", 5);
 				}
 			}
 
-			GUILayout.Label("Task Animations:");
+			GUILayout.Label("任务动画:");
 			GUILayout.BeginHorizontal();
-			if(GUILayout.Button("Start Medbay Scan"))
+			if(GUILayout.Button("开始医疗扫描"))
 			{
 				Network.SendSetScanner(true);
 			}
 
-			if(GUILayout.Button("Finish Medbay Scan"))
+			if(GUILayout.Button("结束医疗扫描"))
 			{
 				Network.SendSetScanner(false);
 			}
 			GUILayout.EndHorizontal();
 
 			GUILayout.BeginHorizontal();
-			if(GUILayout.Button("Clear Asteroids"))
+			if(GUILayout.Button("清除陨石"))
 			{
 				Network.SendPlayAnimation((byte)TaskTypes.ClearAsteroids);
 			}
 
-			if(GUILayout.Button("Empty Garbage"))
+			if(GUILayout.Button("清空垃圾"))
 			{
 				Network.SendPlayAnimation((byte)TaskTypes.EmptyGarbage);
 			}
 			GUILayout.EndHorizontal();
 
-			if(GUILayout.Button("Prime Shields"))
+			if(GUILayout.Button("激活护盾"))
 			{
 				Network.SendPlayAnimation((byte)TaskTypes.PrimeShields);
 			}
 
 			GUILayout.Space(5);
-			GUILayout.Label($"Update level to: {level + 1}");
+			GUILayout.Label($"修改等级为: {level + 1}");
 			level = (uint)GUILayout.HorizontalSlider(level, 0, 199);
 
-			if(GUILayout.Button("Send Level Update"))
+			if(GUILayout.Button("发送等级更新"))
 			{
 				PlayerControl.LocalPlayer.RpcSetLevel(level);
-				Hydra.notifications.Send("Level Updater", $"Your level has been changed to {level + 1}", 5);
+				Hydra.notifications.Send("等级修改", $"你的等级已改为 {level + 1}", 5);
 			}
 		}
 
@@ -108,24 +106,23 @@ namespace HydraMenu.ui.sections
 		{
 			Il2CppSystem.Collections.Generic.List<PlayerTask> allTasks = PlayerControl.LocalPlayer.myTasks;
 
-			Hydra.Log.LogInfo("Completing all tasks...");
+			Hydra.Log.LogInfo("正在完成所有任务...");
 			foreach(PlayerTask task in allTasks)
 			{
 				if(task.IsComplete)
 				{
-					Hydra.Log.LogInfo($"Task {task.Id} has already been completed, skipping");
+					Hydra.Log.LogInfo($"任务 {task.Id} 已完成，跳过");
 					continue;
 				}
 
-				Hydra.Log.LogInfo($"Sent CompleteTask RPC for task {task.Id}");
+				Hydra.Log.LogInfo($"已发送任务 {task.Id} 的完成RPC");
 				PlayerControl.LocalPlayer.RpcCompleteTask(task.Id);
 
-				// If we want to complete more than six tasks then a delay needs to be implemented
-				// otherwise the vanilla anticheat will kick us for violating ratelimits
+				// 如果要完成超过6个任务，需要加延迟，否则原版反作弊会以频率限制为由踢出
 				yield return Effects.Wait(0.05f);
 			}
 
-			Hydra.notifications.Send("Task Finisher", "All your tasks have been finished.", 5);
+			Hydra.notifications.Send("任务完成", "你的所有任务已完成。", 5);
 		}
 	}
 }

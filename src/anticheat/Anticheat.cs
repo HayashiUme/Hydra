@@ -1,4 +1,4 @@
-﻿using HarmonyLib;
+using HarmonyLib;
 using Hazel;
 using HydraMenu.anticheat.rpc;
 using System;
@@ -20,15 +20,27 @@ namespace HydraMenu.anticheat
 			{ RpcCalls.SetName, new SetName() },
 			{ RpcCalls.SetColor, new SetColor() },
 			{ RpcCalls.ReportDeadBody, new ReportDeadBody() },
+			{ RpcCalls.MurderPlayer, new MurderPlayer() },
+			{ RpcCalls.SendChat, new SendChat() },
 			{ RpcCalls.SetScanner, new SetScanner() },
 			{ RpcCalls.SetStartCounter, new SetStartCounter() },
 			{ RpcCalls.EnterVent, new EnterVent() },
 			{ RpcCalls.ExitVent, new ExitVent() },
 			{ RpcCalls.SnapTo, new SnapTo() },
 			{ RpcCalls.CloseDoorsOfType, new CloseDoorsOfType() },
+			{ RpcCalls.CloseMeeting, new CloseMeeting() },
+			{ RpcCalls.VotingComplete, new VotingComplete() },
+			{ RpcCalls.CastVote, new CastVote() },
+			{ RpcCalls.AddVote, new AddVote() },
 			{ RpcCalls.ClimbLadder, new ClimbLadder() },
+			{ RpcCalls.BootFromVent, new BootFromVent() },
 			{ RpcCalls.UpdateSystem, new UpdateSystem() },
-			{ RpcCalls.SetLevel, new SetLevel() }
+			{ RpcCalls.SetLevel, new SetLevel() },
+			{ RpcCalls.SetRole, new SetRole() },
+			{ RpcCalls.ProtectPlayer, new ProtectPlayer() },
+			{ RpcCalls.Shapeshift, new Shapeshift() },
+			{ RpcCalls.CheckMurder, new CheckMurder() },
+			{ RpcCalls.Pet, new Pet() }
 		};
 
 		public static bool CheckSpoofedPlatforms { get; set; } = true;

@@ -88,7 +88,7 @@ namespace HydraMenu.features
 			{
 				if(!Enabled || !AmongUsClient.Instance.AmHost || __instance == PlayerControl.LocalPlayer || level > MinLevel) return;
 
-				Hydra.notifications.Send("Block Low Levels", $"{__instance.Data.PlayerName} is level {level}, which is below the level threshold. They will be kicked from the game.");
+				Hydra.notifications.Send("等级拦截", $"{__instance.Data.PlayerName} 等级为 {level}, 低于等级阈值。他们将被踢出游戏。");
 				AmongUsClient.Instance.KickPlayer(__instance.OwnerId, false);
 			}
 		}

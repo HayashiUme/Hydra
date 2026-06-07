@@ -1,4 +1,4 @@
-﻿using HarmonyLib;
+using HarmonyLib;
 using UnityEngine;
 
 namespace HydraMenu.routines
@@ -10,12 +10,13 @@ namespace HydraMenu.routines
 		public DoorTrollerRoutine doorTroller = new DoorTrollerRoutine();
 		public PlayerFollowerRoutine playerFollower = new PlayerFollowerRoutine();
 		public ReportBodySpam reportBodySpam = new ReportBodySpam();
+		public MeetingSpamRoutine meetingSpam = new MeetingSpamRoutine();
 
 		public IRoutine[] routineList = [];
 
 		public RoutineManager()
 		{
-			routineList = [ autoTriggerSpores, discoHost, doorTroller, playerFollower, reportBodySpam ];
+			routineList = [ autoTriggerSpores, discoHost, doorTroller, playerFollower, reportBodySpam, meetingSpam ];
 		}
 
 		public void Update()

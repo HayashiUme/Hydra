@@ -30,7 +30,7 @@ namespace HydraMenu.features
 
 				if(PlayerControl.LocalPlayer.Data.IsDead) return;
 
-				Hydra.notifications.Send("Auto Report Bodies", $"{target.Data.PlayerName} was killed by {__instance.Data.PlayerName} {Utilities.GetPlayerColor(__instance.Data)}, their body has been automatically reported.");
+				Hydra.notifications.Send("自动报告尸体", $"{target.Data.PlayerName} 被 by {__instance.Data.PlayerName} {Utilities.GetPlayerColor(__instance.Data)}, 的尸体已被自动报告。");
 				PlayerControl.LocalPlayer.CmdReportDeadBody(target.Data);
 			}
 		}
@@ -81,7 +81,7 @@ namespace HydraMenu.features
 
 					if(value && AmongUsClient.Instance.AmHost)
 					{
-						Hydra.notifications.Send("Block Sabotages", "This option should be used when you are not the host of the lobby. Use Disable Sabotages in the Host section instead.");
+						Hydra.notifications.Send("阻止破坏", "此选项应在你不是房主时使用。请改用主机页面的禁用破坏。");
 						Host.DisableSabotages.Enabled = true;
 						return;
 					}

@@ -90,7 +90,7 @@ namespace HydraMenu.features
 			{
 				if(Enabled && target == PlayerControl.LocalPlayer)
 				{
-					Hydra.notifications.Send("Immortality", $"{__instance.Data.PlayerName} attempted to kill you!", 5);
+					Hydra.notifications.Send("不死之身", $"{__instance.Data.PlayerName} 试图杀你!", 5);
 				}
 			}
 		}

@@ -52,7 +52,7 @@ namespace HydraMenu.features
 					!AmongUsClient.Instance.AmHost
 				)
 				{
-					Hydra.notifications.Send("Protections Alert", $"Saved you from getting banned by {target.PlayerName}'s glitched body.");
+					Hydra.notifications.Send("防护警告", $"已保护你免因 {target.PlayerName} 的错误尸体而被封禁。");
 					return false;
 				}
 				return true;
@@ -109,7 +109,7 @@ namespace HydraMenu.features
 
 				ClientData player = AmongUsClient.Instance.GetClient(srcClient);
 
-				Hydra.notifications.Send("Votekick Logger", $"{player.PlayerName} has voted to kick you out.");
+				Hydra.notifications.Send("投票踢人日志", $"{player.PlayerName} 投票要踢出你。");
 
 				// Prevent players from being able to votekick you as host
 				return !(Enabled && AmongUsClient.Instance.AmHost);

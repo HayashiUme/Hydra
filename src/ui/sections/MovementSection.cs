@@ -1,4 +1,4 @@
-﻿using HydraMenu.features;
+using HydraMenu.features;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,32 +6,29 @@ namespace HydraMenu.ui.sections
 {
 	internal class MovementSection : ISection
 	{
-		public MovementSection() : base("Movement") { }
+		public MovementSection() : base("移动") { }
 
 		public override void Render()
 		{
 			if(PlayerControl.LocalPlayer == null)
 			{
-				GUILayout.Label("You are not currently in a game, these options will not work.");
-
-				// Having all possible options shown at once (even if the player isn't in a game) is nice user experience
-				GUILayout.Toggle(false, "Noclip");
+				GUILayout.Label("你当前不在游戏中，这些选项将无法使用。");
+				GUILayout.Toggle(false, "穿墙模式");
 			}
 			else
 			{
-				// We don't want the position that includes the player's collider from PlayerControl::GetTruePosition()
 				Vector2 position = PlayerControl.LocalPlayer.transform.position;
 
-				GUILayout.Label($"Current Map: {Utilities.GetCurrentMap()}\nCurrent Position:\nX: {position.x:F2}\nY: {position.y:F2}");
+				GUILayout.Label($"当前地图: {Utilities.GetCurrentMap()}\n当前位置:\nX: {position.x:F2}\nY: {position.y:F2}");
 
-				PlayerControl.LocalPlayer.Collider.enabled = !GUILayout.Toggle(!PlayerControl.LocalPlayer.Collider.enabled, "Noclip");
+				PlayerControl.LocalPlayer.Collider.enabled = !GUILayout.Toggle(!PlayerControl.LocalPlayer.Collider.enabled, "穿墙模式");
 			}
 
-			GUILayout.Label($"Speed Modifier: {Self.PlayerSpeedModifier.Multiplier:F2}x");
+			GUILayout.Label($"速度倍率: {Self.PlayerSpeedModifier.Multiplier:F2}x");
 			Self.PlayerSpeedModifier.Multiplier = GUILayout.HorizontalSlider(Self.PlayerSpeedModifier.Multiplier, 0f, 5f);
 
-			Teleporter.UseSnapToRPC = GUILayout.Toggle(Teleporter.UseSnapToRPC, "Use SnapTo RPC For Teleports");
-			GUILayout.Label("Teleport To Location:");
+			Teleporter.UseSnapToRPC = GUILayout.Toggle(Teleporter.UseSnapToRPC, "使用 SnapTo RPC 传送");
+			GUILayout.Label("传送到位置:");
 
 			Dictionary<string, Vector2> teleportLocations = Teleporter.GetTeleportLocations();
 
@@ -56,7 +53,6 @@ namespace HydraMenu.ui.sections
 				i++;
 			}
 
-			// If the amount of teleport locations is an odd number then we won't be ending the horizontal layout, so we check if we need to end it here
 			if(i % 2 != 0)
 			{
 				GUILayout.EndHorizontal();
